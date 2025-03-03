@@ -1,11 +1,14 @@
-import { analytics } from "./modules/analytics.js";
-import { App } from './infra/App.js';
+import { App } from './infrastructure/App.js';
 
-const message: String = "Hello NodeJS";
-console.log(message);
+const startServer = async (): Promise<void> => {
+  try {
+    const app = App.getInstance();
+    await app.init();
+    console.log('Server started successfully');
+  } catch (err) {
+    console.error('Failed to start server', err);
+    process.exit(1);
+  }
+};
 
-analytics("Main.ts");
-
-const app = new App();
-
-app.init();
+startServer();

@@ -1,34 +1,34 @@
+// src/infrastructure/Tcp.ts
+
 import "reflect-metadata";
-import express from "express";
+import express, { Application } from "express";
 import { useExpressServer } from "routing-controllers";
 
 import { IService } from "../types/services.js";
-import { controllers } from "../app/domain/index.js";
-import { middlewares } from "../app/middlewares/index.js";
+import routers from "../routers/index.js";
 
 export class Tcp implements IService {
   private static instance: Tcp;
-
-  private routePrefix = "/api";
-  public server = express();
+  private routePrefix: string = "/api";
+  public server: Application;
 
   constructor() {
-    if (!Tcp.instance) {
-      Tcp.instance = this;
-    }
+    this.server = express();
+  }
 
+  public static getInstance(): Tcp {
+    if (!Tcp.instance) {
+      Tcp.instance = new Tcp();
+    }
     return Tcp.instance;
   }
 
-  async init() {
+  public async init() {
     const { server, routePrefix } = this;
 
     server.use(express.json());
-
+    server.use(routePrefix, routers);
     useExpressServer(server, {
-      routePrefix,
-      controllers,
-      middlewares,
       cors: true,
       defaultErrorHandler: true,
       validation: false,
