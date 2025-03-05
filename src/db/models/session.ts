@@ -1,5 +1,4 @@
 // src/db/models/session.ts
-
 import { model, Schema, Document } from 'mongoose';
 
 export interface ISession extends Document {

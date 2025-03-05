@@ -1,15 +1,14 @@
 // src/infrastructure/Tcp.ts
+import 'reflect-metadata';
+import express, { Application } from 'express';
+import { useExpressServer } from 'routing-controllers';
 
-import "reflect-metadata";
-import express, { Application } from "express";
-import { useExpressServer } from "routing-controllers";
-
-import { IService } from "../types/services.js";
-import routers from "../routers/index.js";
+import { IService } from '../types/services.js';
+import routers from '../routers/index.js';
 
 export class Tcp implements IService {
   private static instance: Tcp;
-  private routePrefix: string = "/api";
+  private routePrefix: string = '/api';
   public server: Application;
 
   constructor() {
@@ -36,7 +35,7 @@ export class Tcp implements IService {
 
     return new Promise<boolean>((resolve) => {
       server.listen(4000, () => {
-        console.log("Tcp service started on port 4000");
+        console.log('Tcp service started on port 4000');
 
         return resolve(true);
       });

@@ -1,3 +1,4 @@
+// src/main.ts
 import { App } from './infrastructure/App.js';
 
 const startServer = async (): Promise<void> => {
