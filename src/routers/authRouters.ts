@@ -12,7 +12,7 @@ const authRouter = Router();
 
 authRouter.post('/register', registerUserController);
 
-authRouter.post('login', loginUserController);
+authRouter.post('/login', loginUserController);
 
 authRouter.post('/refresh', refreshSessionController);
 
