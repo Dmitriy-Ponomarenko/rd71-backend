@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import express, { Application } from 'express';
 import { useExpressServer } from 'routing-controllers';
-
+import cors from 'cors';
 import { IService } from '../types/services.js';
 import routers from '../routers/index.js';
 
@@ -25,6 +25,12 @@ export class Tcp implements IService {
   public async init() {
     const { server, routePrefix } = this;
 
+    server.use(
+      cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+      }),
+    );
     server.use(express.json());
     server.use(routePrefix, routers);
     useExpressServer(server, {
