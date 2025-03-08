@@ -27,7 +27,7 @@ export class Tcp implements IService {
 
     server.use(
       cors({
-        origin: 'http://localhost:5173',
+        origin: ['http://localhost:5175', 'https://rd71-frontend.vercel.app'],
         credentials: true,
       }),
     );
