@@ -1,5 +1,4 @@
 // src/db/initMongoDB.ts
-
 import mongoose from 'mongoose';
 import { env } from '../utils/env.js';
 
