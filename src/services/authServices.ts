@@ -7,16 +7,7 @@ import { SessionCollection } from '../db/models/session.js';
 import { THIRTY_DAYS, FIFTEEN_MINUTES } from '../constants/index.js';
 import { randomBytes } from 'crypto';
 
-interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  gender: 'male' | 'female' | 'other';
-  avatar?: string;
-  isVerified?: boolean;
-}
-
-interface LoginPayload {
+interface AuthPayload {
   email: string;
   password: string;
 }
@@ -27,7 +18,7 @@ interface RefreshSessionPayload {
 }
 
 export const registerUser = async (
-  payload: RegisterPayload,
+  payload: AuthPayload,
 ): Promise<IUser | null> => {
   const user = await UserCollection.findOne({ email: payload.email });
   if (user) throw createHttpError(409, 'Email in use');
@@ -43,7 +34,7 @@ export const registerUser = async (
 };
 
 export const loginUser = async (
-  payload: LoginPayload,
+  payload: AuthPayload,
 ): Promise<{ newSessionsObject: any; user: IUser }> => {
   const user = await UserCollection.findOne({ email: payload.email });
   if (!user) {
