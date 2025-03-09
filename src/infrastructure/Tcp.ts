@@ -34,7 +34,6 @@ export class Tcp implements IService {
     server.use(express.json());
     server.use(routePrefix, routers);
     useExpressServer(server, {
-      cors: true,
       defaultErrorHandler: true,
       validation: false,
     });
