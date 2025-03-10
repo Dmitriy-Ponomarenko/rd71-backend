@@ -18,9 +18,7 @@ export class App implements IService {
 
   public async init(): Promise<boolean> {
     const { tcp } = this;
-    console.log('Initializing TCP service...');
     await tcp.init();
-    console.log('TCP service initialized successfully');
     return true;
   }
 }

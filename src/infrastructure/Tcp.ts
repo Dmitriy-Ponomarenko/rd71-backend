@@ -32,8 +32,6 @@ export class Tcp implements IService {
 
     return new Promise<boolean>((resolve, reject) => {
       const port = process.env.PORT || 4000;
-      console.log(`Attempting to start TCP service on port ${port}`);
-
       server.listen(port, () => {
         console.log(`Tcp service started on port ${port}`);
         return resolve(true);
