@@ -21,28 +21,25 @@ export class Tcp implements IService {
     }
     return Tcp.instance;
   }
-
   public async init() {
     const { server, routePrefix } = this;
 
-    server.use(
-      cors({
-        origin: ['http://localhost:5175', 'https://rd71-frontend.vercel.app'],
-        credentials: true,
-      }),
-    );
+    server.use(cors({ origin: ['http://localhost:5175', 'https://rd71-frontend.vercel.app'], credentials: true }));
     server.use(express.json());
     server.use(routePrefix, routers);
-    useExpressServer(server, {
-      defaultErrorHandler: true,
-      validation: false,
-    });
 
-    return new Promise<boolean>((resolve) => {
+    useExpressServer(server, { defaultErrorHandler: true, validation: false });
+
+    return new Promise<boolean>((resolve, reject) => {
       const port = process.env.PORT || 4000;
+      console.log(`Attempting to start TCP service on port ${port}`);
+
       server.listen(port, () => {
-        console.log('Tcp service started on port ${port}');
+        console.log(`Tcp service started on port ${port}`);
         return resolve(true);
+      }).on('error', (err) => {
+        console.error('Failed to start server:', err);
+        reject(false);
       });
     });
   }
